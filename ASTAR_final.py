@@ -195,3 +195,4 @@ def Astar():
                       f"is {board.selector(Z[0],Z[1]).f} units long denoted by the string of o's \n", maze)
 
 Astar()
+input()
