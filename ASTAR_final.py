@@ -3,10 +3,17 @@ import numpy as np
 import math
 
 class Nodes:
+    """
+    Description:
+    These are the objects that populate the grid or 'maze' on the board.  
+    The constructor takes two parameters: the x and y positions where
+    the node will reside.
+
+    """
     def __init__(self, xpos, ypos):
         self.xpos = xpos
         self.ypos = ypos
-        self.g = float('inf') # considered to be inf until changed
+        self.g = float('inf')
         self.h = float('inf')
         self.f = self.g + self.h
         self.start_point = False
@@ -32,8 +39,12 @@ class Nodes:
 
 
 class Board:
+    """
+    Description:
+    The board is a matrix of 'Node' objects previously defined.  
+    This matrix will be navigated by the algorithm.
+    """
     active = []
-
     def __init__(self, size, Ax, Ay, Zx, Zy):
         self.A = (Ax, Ay)
         self.Z = (Zx, Zy)
@@ -69,9 +80,18 @@ class Board:
     def selector(self, x, y):
         return self.all_arr[self.size*x + y]
 
-# ~~~~~~~~~~~~~~~~~~~~~~~ STARTING ~~~~~~~~~~~~~~~~~~~~~~~~~
-def Astar():
+# --- MAIN FUNCTION ---
+def Astar() -> None:
+    """
+    Description:
+    Main executable function to run the algorithm.
+    1. Take input from the user for the size of the maze (n x n).
+    2. Generate a random maze to navigate through, with a start and end point.
+    3. Initialize the board with the relevant objects.
+    4. Follow the A* algorithm to find the shortest path 
+    from the start to the end point. Display the maze and path to the user.
 
+    """
     # Taking a valid input
     correct_input = False
     while correct_input == False:
@@ -130,7 +150,8 @@ def Astar():
                 if board.active[i].fully_checked == False:
                     active_len_arr.append(board.active[i].f)
         min_ind = active_len_arr.index(min(active_len_arr))
-        close = board.active[min_ind] # the closest active node called 'close'
+        # the closest active node called 'close'
+        close = board.active[min_ind]
 
         # finding which of the adjacent nodes to 'close' are available
         available_adjacent = []
@@ -193,6 +214,10 @@ def Astar():
                 return \
                 print("After applying th ASTAR path finding algorithm... \nThe shortest path "
                       f"is {board.selector(Z[0],Z[1]).f} units long denoted by the string of o's \n", maze)
+    # Pause
+    input("Click enter to exit")
 
-Astar()
-input()
+
+# Main executable
+if __name__ == '__main__':
+    Astar()
